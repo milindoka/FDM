@@ -18,7 +18,7 @@ class EditableTable:
               title1.insert(0, "title") 
               title1.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
 
-              title1.grid(row=k,column=l)
+              title1.grid(row=k+1,column=l)
         
         self.table = []
         for i in range(self.rows):
@@ -26,7 +26,7 @@ class EditableTable:
             for j in range(self.columns):
                 cell_var = tk.StringVar()
                 cell_entry = tk.Entry(self.root, textvariable=cell_var)
-                cell_entry.grid(row=i+1, column=j)
+                cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)
 
@@ -38,6 +38,19 @@ class EditableTable:
                 row_values.append(self.table[i][j].get())
             table_values.append(row_values)
         return table_values
+    
+    
+    
+    def add_row(self):
+       for i in range(1):
+            row = []
+            for j in range(self.columns):
+                cell_var = tk.StringVar()
+                cell_entry = tk.Entry(self.root, textvariable=cell_var)
+                cell_entry.grid(row=self.rows+1, column=j)
+                row.append(cell_var)
+            self.table.append(row)
+            self.rows=self.rows+1
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -49,5 +62,7 @@ if __name__ == "__main__":
     btn = tk.Button(root, text="Print Table Values", command=print_table_values)
     btn.grid(row=table.rows+1, columnspan=table.columns)
 
+    btn2 = tk.Button(root, text="ADD ROW", command=table.add_row)
+    btn2.grid(row=0,column=1)
     root.mainloop()
 
