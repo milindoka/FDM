@@ -1,4 +1,6 @@
-#This code creates a simple editable table with 3 rows and 3 columns using Tkinter. The EditableTable class creates the table and allows you to get the values entered in the table. The print_table_values function prints the entered values when the button is clicked.
+#This code creates a simple editable table with self.rows and self.columns using Tkinter.
+# The EditableTable class creates the table and allows you to get the values entered in the table. 
+# The print_table_values function prints the entered values when the button is clicked.
 
 
 import tkinter as tk
@@ -7,19 +9,18 @@ class EditableTable:
     def __init__(self, root):
         self.root = root
         self.rows = 3
-        self.columns = 3
+        self.columns = 9
         self.create_table()
 
     def create_table(self):
-       #table title row
+       #====== create table title row======
         for k in range(1):
             for l in range(self.columns):
               title1 = tk.Entry(self.root,justify="center",bg="gray")
-              title1.insert(0, "title") 
+              title1.insert(0, "Sr") 
               title1.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
-
-              title1.grid(row=k+1,column=l)
-        
+              title1.grid(row=1,column=0)
+        #==================================
         self.table = []
         for i in range(self.rows):
             row = []
