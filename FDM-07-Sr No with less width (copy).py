@@ -53,6 +53,8 @@ class EditableTable:
             table_values.append(row_values)
         return table_values
     
+    def print_table_values():
+        print(table.get_table_values())
     
     
     def add_row(self):

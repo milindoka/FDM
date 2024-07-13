@@ -20,9 +20,7 @@ class Model:
     
     def open_popup(self):
             self.messagebox.showinfo("Welcome to GFG.",  "Hi I'm your message") 
-            
-
-    
+        
     
     def loadfile(self):
         file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")])
@@ -31,7 +29,6 @@ class Model:
                 temp_str=file.read()  # Insert file content
                 print(temp_str) 
                 
-    
     def increment_value(self):
         self.value += 1
 
@@ -47,7 +44,7 @@ class View:
         frame.grid(row=0, column=0, sticky="nwe")
         
         self.label = ttk.Label(frame, text="0")
-        self.label.grid(row=1, column=0, pady=10)
+        self.label.grid(row=1, column=0, pady=5)
 
        # self.label = ttk.Label(frame, text="Scrollable Content")
        # self.label.grid(row=0, column=0, padx=20,pady=10)
@@ -55,9 +52,12 @@ class View:
        # self.new_button = ttk.Button(frame, text="New Button")
         #self.new_button.grid(row=1, column=0, pady=10)
         self.increment_button = ttk.Button(frame, text="Increment", command=self.controller.increment)
-        self.increment_button.grid(row=1, column=1, pady=10)
+        self.increment_button.grid(row=1, column=1, pady=5)
         self.decrement_button = ttk.Button(frame, text="Decrement", command=self.controller.decrement)
-        self.decrement_button.grid(row=1, column=2, pady=10) 
+        self.decrement_button.grid(row=1, column=2, pady=5) 
+        self.printbtn = ttk.Button(frame, text="Print Table Values", command=self.controller.print_table_values)
+        self.printbtn.grid(row=1,column=3,pady=5)
+            
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
         scrollbar = ttk.Scrollbar(frame, orient="vertical", command=canvas.yview)
@@ -116,6 +116,16 @@ class View:
     def update_value(self, value):
         self.label.config(text=str(value))
 
+    def get_table_values(self):
+        table_values = []
+        for i in range(50):
+            row_values = []
+            for j in range(8):
+                row_values.append(self.table[i][j].get())
+            table_values.append(row_values)
+        return table_values
+
+
 class Controller:
     def __init__(self, root):
         self.model = Model()
@@ -130,13 +140,15 @@ class Controller:
         #self.model.decrement_value()
         #self.view.update_value(self.model.value)
         self.model.loadfile()
+
+    def print_table_values(self):
+        print(self.view.get_table_values())
         
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("FDM-Fixed Deposit Manager")
     root.geometry("720x800")
    # root.attributes('-fullscreen', True)
-
 
     controller = Controller(root)
     root.mainloop()
