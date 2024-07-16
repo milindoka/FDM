@@ -28,7 +28,8 @@ class Model:
         if file_path:
             with open(file_path, "r") as file:
                 temp_str=file.read()  # Insert file content
-                print(temp_str) 
+                x=temp_str.split('~')
+                print(x) 
                 
     def increment_value(self):
         self.value += 1
