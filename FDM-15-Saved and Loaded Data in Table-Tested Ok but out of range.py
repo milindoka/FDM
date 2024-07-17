@@ -148,9 +148,12 @@ class Controller:
         data = self.model.loadfile()
         x=data.split('~')
         print(x)
-        for y in x:
-          print(y)
-        
+        r=0
+        for y in x: 
+          z=y.split('|')
+          for c in range(8):  
+             self.view.table[r][c].set(z[c])
+          r=r+1   
     def print_table_values(self):
         print(self.view.get_table_values())
         
