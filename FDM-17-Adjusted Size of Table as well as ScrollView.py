@@ -66,7 +66,7 @@ class View:
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
         scrollbar = ttk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=scrollbar.set)
+        canvas.configure(yscrollcommand=scrollbar.set,height=550)
 
         # Step 5: Create a Frame for Scrollable Content
         content_frame = ttk.Frame(canvas)
@@ -83,7 +83,7 @@ class View:
         title_row=['Principal','Maturity','From','To','Interest','ID','Title']
         i=1
         for x in title_row:
-            title_str = tk.Entry(content_frame,justify="center",bg="gray")
+            title_str = tk.Entry(content_frame,justify="center",bg="gray",width=15)
             title_str.insert(i,x) 
             title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
             title_str.grid(row=1,column=i)
@@ -97,7 +97,7 @@ class View:
                 if j==0:
                  cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
                 else :
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var)
+                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=15)
                 cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
@@ -164,7 +164,14 @@ class Controller:
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("FDM-Fixed Deposit Manager")
-    root.geometry("720x800")
+    screen_width = root.winfo_screenwidth()
+    screen_height=root.winfo_screenheight()
+
+   #
+   # root.geometry('%dx%d' % (screen_width, screen_height))
+   # root.geometry("720x800")
+    root.geometry('%dx%d' % (screen_width, 600))
+
    # root.attributes('-fullscreen', True)
 
     controller = Controller(root)
