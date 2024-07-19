@@ -82,7 +82,7 @@ class View:
         title_row=['Principal','Maturity','From','To','Interest','ID','Title']
         i=1
         for x in title_row:
-            title_str = tk.Entry(content_frame,justify="center",bg="gray",width=15)
+            title_str = tk.Entry(content_frame,justify="center",bg="gray",width=18)
             title_str.insert(0,x) 
             title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
             title_str.grid(row=1,column=i)
@@ -98,7 +98,7 @@ class View:
                  cell_entry.insert(0,str(i))
                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=15)
+                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=18)
                 cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
@@ -170,6 +170,14 @@ if __name__ == "__main__":
     root.geometry('%dx%d' % (screen_width, 600))
 
    # root.attributes('-fullscreen', True)
-
+    
     controller = Controller(root)
+    def quit(event):
+        print("you pressed control-forwardslash")
+        widget = root.focus_get()
+        row=widget.grid_info()['row']
+        col=widget.grid_info()['column']
+        print(row,col)
+        # 
+    root.bind('<Control-slash>', quit)
     root.mainloop()
