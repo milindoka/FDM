@@ -37,7 +37,7 @@ class Model:
     def increment_value(self):
         self.value += 1
 
-    def decrement_value(self):
+    def load_value(self):
         self.value -= 1
 
 class View:
@@ -56,10 +56,10 @@ class View:
         # Add Buttons above the scroll area
        # self.new_button = ttk.Button(frame, text="New Button")
         #self.new_button.grid(row=1, column=0, pady=10)
-        self.increment_button = ttk.Button(frame, text="Save", command=self.controller.increment)
-        self.increment_button.grid(row=1, column=1, pady=5)
-        self.decrement_button = ttk.Button(frame, text="Load", command=self.controller.decrement)
-        self.decrement_button.grid(row=1, column=2, pady=5) 
+        self.save_btn = ttk.Button(frame, text="Save", command=self.controller.save)
+        self.save_btn.grid(row=1, column=1, pady=5)
+        self.load_btn = ttk.Button(frame, text="Load", command=self.controller.load)
+        self.load_btn.grid(row=1, column=2, pady=5) 
         self.printbtn = ttk.Button(frame, text="Print Table Values", command=self.controller.print_table_values)
         self.printbtn.grid(row=1,column=3,pady=5)
             
@@ -84,7 +84,7 @@ class View:
         i=1
         for x in title_row:
             title_str = tk.Entry(content_frame,justify="center",bg="gray",width=15)
-            title_str.insert(i,x) 
+            title_str.insert(0,x) 
             title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
             title_str.grid(row=1,column=i)
             i=i+1
@@ -96,6 +96,8 @@ class View:
                 cell_var = tk.StringVar()
                 if j==0:
                  cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
+                 cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
+                 cell_entry.insert(0,str(i))
                 else :
                  cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=15)
                 cell_entry.grid(row=i+2, column=j)
@@ -136,15 +138,11 @@ class Controller:
         self.model = Model()
         self.view = View(root, self)
 
-    def increment(self):
-      # self.model.increment_value()
-      # self.view.update_value(self.model.value)
+    def save(self):
         self.model.save_str=self.view.get_table_values()
         self.model.savefile()
         
-    def decrement(self):
-        #self.model.decrement_value()
-        #self.view.update_value(self.model.value)
+    def load(self):
         data = self.model.loadfile()
         x=data.split('~')
         print(x)
