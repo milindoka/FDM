@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from tkinter import filedialog
 import tkinter.messagebox
 
@@ -45,31 +44,28 @@ class View:
     def __init__(self, root, controller):
         self.controller = controller
         # Step 3: Create a Frame for Grid Layout
-        frame = ttk.Frame(root)
-        frame.grid(row=0, column=0, sticky="nwe")
+        frame = tk.Frame(root) 
+        frame.grid(row=0, column=0,sticky="nwe") 
         
-       # self.label = ttk.Label(frame, text="0")
-       # self.label.grid(row=1, column=0, pady=5)
-
-       # self.label = ttk.Label(frame, text="Scrollable Content")
-       # self.label.grid(row=0, column=0, padx=20,pady=10)
-        # Add Buttons above the scroll area
-       # self.new_button = ttk.Button(frame, text="New Button")
-        #self.new_button.grid(row=1, column=0, pady=10)
-        self.save_btn = ttk.Button(frame, text="Save", command=self.controller.save)
-        self.save_btn.grid(row=1, column=1, pady=5)
-        self.load_btn = ttk.Button(frame, text="Load", command=self.controller.load)
-        self.load_btn.grid(row=1, column=2, pady=5) 
-        self.printbtn = ttk.Button(frame, text="Print", command=self.controller.print_table_values)
-        self.printbtn.grid(row=1,column=3,pady=5)
-            
+        self.save_btn = tk.Button(frame, text="  Save ", command=self.controller.save)
+        self.save_btn.grid(row=0,column=0,padx=5, pady=5, sticky="w")
+        
+        self.load_btn = tk.Button(frame, text="  Load  ", command=self.controller.load)
+        self.load_btn.grid(row=0,column=1,padx=5, pady=5) 
+        
+        self.printbtn = tk.Button(frame, text="  Print  ", command=self.controller.print_table_values)
+        self.printbtn.grid(row=0,column=2,padx=5, pady=5)
+        
+        self.refr_btn = tk.Button(frame, text=" Refresh ", command=self.controller.save)
+        self.refr_btn.grid(row=0,column=3,padx=5, pady=5)
+        
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
-        scrollbar = ttk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=scrollbar.set,height=550)
-
+        scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=scrollbar.set, height=550)    
+    
         # Step 5: Create a Frame for Scrollable Content
-        content_frame = ttk.Frame(canvas)
+        content_frame = tk.Frame(canvas)
 
         # Step 6: Configure the Canvas and Scrollable Content Frame
         content_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
