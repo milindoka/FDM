@@ -96,8 +96,8 @@ class View:
                 cell_var = tk.StringVar()
                 if j==0:
                  cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
-                 cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                  cell_entry.insert(0,str(i))
+                 cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
                  cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=15)
                 cell_entry.grid(row=i+2, column=j)
