@@ -178,6 +178,11 @@ if __name__ == "__main__":
         row=widget.grid_info()['row']
         col=widget.grid_info()['column']
         print(row,col)
-        # 
+        
+    def copy_upper_row(event): 
+        print("ur")
+         
+         
     root.bind('<Control-slash>', quit)
+    root.bind('<Control-r>',copy_upper_row)
     root.mainloop()
