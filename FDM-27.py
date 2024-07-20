@@ -7,7 +7,7 @@ class Model:
     def __init__(self):
         self.value = 0
         self.table = []
-        self.rows = 50
+        self.rows = 10
         self.columns = 9
         self.save_str="ttt"
         
@@ -56,8 +56,8 @@ class View:
         self.printbtn = tk.Button(frame, text="  Print  ", command=self.controller.print_table_values)
         self.printbtn.grid(row=0,column=2,padx=5, pady=5)
         
-        self.refr_btn = tk.Button(frame, text=" Refresh ", command=self.controller.save)
-        self.refr_btn.grid(row=0,column=3,padx=5, pady=5)
+        self.addr_btn = tk.Button(frame, text=" Add Row ", command=self.controller.add_row)
+        self.addr_btn.grid(row=0,column=3,padx=5, pady=5)
         
         self.sort_btn = tk.Button(frame, text=" Date Sort ", command=self.controller.save)
         self.sort_btn.grid(row=0,column=4,padx=5, pady=5)
@@ -89,9 +89,9 @@ class View:
             i=i+1
         # -----Add rows and columns to table-----
         self.table = []
-        for i in range(50):
+        for i in range(controller.model.rows):
             row = []
-            for j in range(9):
+            for j in range(controller.model.columns):
                 cell_var = tk.StringVar()
                 if j==0:
                  cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
@@ -124,17 +124,40 @@ class View:
 
     def get_table_values(self):
         table_values =""
-        for i in range(50):
+        for i in range(controller.model.rows):
             row_values =""
-            for j in range(1,9):
+            for j in range(1,controller.model.columns):
                 row_values=row_values+self.table[i][j].get()+'|'
             table_values=table_values+row_values+'~'
         return table_values
+
+    def add_one_row(self):
+        print("cc")
+        frame = tk.Frame(root) 
+        canvas = tk.Canvas(frame)
+        content_frame = tk.Frame(canvas)
+
+        col_len=[5,12,12,10,10,7,20,10,10]
+        for i in range(1):
+            row = []
+            for j in range(controller.model.columns):
+                cell_var = tk.StringVar()
+                if j==0:
+                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
+                 cell_entry.insert(0,str(i))
+                 cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
+                else :
+                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=col_len[j])
+                cell_entry.grid(row=controller.model.rows+2, column=j)
+                row.append(cell_var)
+            self.table.append(row)        
+            controller.model.rows=controller.model.rows+1
+
     
     def copy_ur(self,ro,co):
         #temp=self.table[ro][co].get()
         if ro>2 :
-            for c in range(1,9):
+            for c in range(1,controller.model.columns):
               temp=self.table[ro-3][c].get()
               self.table[ro-2][c].set(temp)
               print(temp)  
@@ -166,6 +189,10 @@ class Controller:
           
     def print_table_values(self):
         print(self.view.get_table_values())
+
+    def add_row(self):
+        self.view.add_one_row() 
+
         
 if __name__ == "__main__":
     root = tk.Tk()
@@ -181,6 +208,7 @@ if __name__ == "__main__":
    # root.attributes('-fullscreen', True)
     
     controller = Controller(root)
+    
     
     def quit(event):
         print("you pressed control-forwardslash")
@@ -198,8 +226,7 @@ if __name__ == "__main__":
             
         else :
             print("noentry")    
-
-         
+            
          
     root.bind('<Control-slash>', quit)
     root.bind('<Control-r>',copy_upper_row)

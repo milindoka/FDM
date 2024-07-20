@@ -1,0 +1,19 @@
+
+
+The MVC architecture is very broad and can change depending on the programming language and type of application you are doing, 
+so in this case, yes your approach can be accepted as correct.
+
+What I have learned from static typed languages is that you define the model and views as complete separate entities,
+ and the controller takes an instance of both model and views as parameters.
+
+What you need to ask yourself to define if your app is MVC is the following:
+
+    If I change something in the view do I break anything in the model?
+    If I change something in the model do I break anything in the view?
+    Is the controller communicating everything in both view and model so that they don't have to communicate with each other?
+
+If nothing breaks and the controller does all of the communication then yes, your application is MVC.
+
+You might want to look into design patterns such as Singleton, Factory and others that all use the MVC architecture 
+and define ways to implement it.
+
