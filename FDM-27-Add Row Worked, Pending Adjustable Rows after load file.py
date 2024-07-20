@@ -68,13 +68,13 @@ class View:
         canvas.configure(yscrollcommand=scrollbar.set, height=550)    
     
         # Step 5: Create a Frame for Scrollable Content
-        content_frame = tk.Frame(canvas)
+        self.content_frame = tk.Frame(canvas)
 
         # Step 6: Configure the Canvas and Scrollable Content Frame
-        content_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        self.content_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
         # Create Table 
         #  --Table Title Row -----
-        title_str = tk.Entry(content_frame,justify="center",bg="gray",width=5)
+        title_str = tk.Entry(self.content_frame,justify="center",bg="gray",width=5)
         title_str.insert(0, "Sr") 
         title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
         title_str.grid(row=1,column=0)
@@ -82,7 +82,7 @@ class View:
         title_row=['Principal','Maturity','From','To','Interest','ID','Bank','Title']
         i=1
         for x in title_row:
-            title_str = tk.Entry(content_frame,justify="center",bg="gray",width=col_len[i])
+            title_str = tk.Entry(self.content_frame,justify="center",bg="gray",width=col_len[i])
             title_str.insert(0,x) 
             title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
             title_str.grid(row=1,column=i)
@@ -94,11 +94,11 @@ class View:
             for j in range(controller.model.columns):
                 cell_var = tk.StringVar()
                 if j==0:
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
+                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
                  cell_entry.insert(0,str(i))
                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=col_len[j])
+                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
                 cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
@@ -113,7 +113,7 @@ class View:
         frame.rowconfigure(0, weight=1)
 
         # Step 9: Pack Widgets onto the Window
-        canvas.create_window((0, 0), window=content_frame, anchor="nw")
+        canvas.create_window((0, 0), window=self.content_frame, anchor="nw")
         canvas.grid(row=2, column=0, sticky="nsew")
         scrollbar.grid(row=2, column=1, sticky="ns")
 
@@ -133,21 +133,17 @@ class View:
 
     def add_one_row(self):
         print("cc")
-        frame = tk.Frame(root) 
-        canvas = tk.Canvas(frame)
-        content_frame = tk.Frame(canvas)
-
         col_len=[5,12,12,10,10,7,20,10,10]
         for i in range(1):
             row = []
             for j in range(controller.model.columns):
                 cell_var = tk.StringVar()
                 if j==0:
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=5)
-                 cell_entry.insert(0,str(i))
+                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
+                 cell_entry.insert(0,str(controller.model.rows))
                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=col_len[j])
+                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
                 cell_entry.grid(row=controller.model.rows+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
