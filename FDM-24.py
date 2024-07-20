@@ -132,9 +132,13 @@ class View:
         return table_values
     
     def copy_ur(self,ro,co):
-        temp=self.table[ro][co].get()
-        print(ro,co)
-        print("--"+temp)
+        #temp=self.table[ro][co].get()
+        if ro>2 :
+            for c in range(1,8):
+              temp=self.table[ro-3][c].get()
+              self.table[ro-2][c].set(temp)
+              print(temp)  
+    
 
 
 class Controller:
