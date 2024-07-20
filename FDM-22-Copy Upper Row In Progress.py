@@ -130,6 +130,11 @@ class View:
                 row_values=row_values+self.table[i][j].get()+'|'
             table_values=table_values+row_values+'~'
         return table_values
+    
+    def copy_ur(self,ro,co):
+        temp=self.table[ro][co].get()
+        print(ro,co)
+        print("--"+temp)
 
 
 class Controller:
@@ -172,6 +177,7 @@ if __name__ == "__main__":
    # root.attributes('-fullscreen', True)
     
     controller = Controller(root)
+    
     def quit(event):
         print("you pressed control-forwardslash")
         widget = root.focus_get()
@@ -180,7 +186,15 @@ if __name__ == "__main__":
         print(row,col)
         
     def copy_upper_row(event): 
-        print("ur")
+        widget = root.focus_get()
+        if isinstance(widget,tk.Entry) :
+            row=widget.grid_info()['row']
+            col=widget.grid_info()['column']
+            controller.view.copy_ur(row,col)
+            
+        else :
+            print("noentry")    
+
          
          
     root.bind('<Control-slash>', quit)
