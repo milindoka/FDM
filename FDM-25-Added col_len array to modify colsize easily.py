@@ -78,11 +78,11 @@ class View:
         title_str.insert(0, "Sr") 
         title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
         title_str.grid(row=1,column=0)
-        
+        col_len=[5,12,12,10,10,7,20,10,10]
         title_row=['Principal','Maturity','From','To','Interest','ID','Bank','Title']
         i=1
         for x in title_row:
-            title_str = tk.Entry(content_frame,justify="center",bg="gray",width=15)
+            title_str = tk.Entry(content_frame,justify="center",bg="gray",width=col_len[i])
             title_str.insert(0,x) 
             title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
             title_str.grid(row=1,column=i)
@@ -98,7 +98,7 @@ class View:
                  cell_entry.insert(0,str(i))
                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
-                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=15)
+                 cell_entry = tk.Entry(content_frame, textvariable=cell_var,width=col_len[j])
                 cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
@@ -158,7 +158,7 @@ class Controller:
         for y in x:
           if not '|' in y : continue
           z=y.split('|')
-          for c in range(0,7):  
+          for c in range(0,8):  
              self.view.table[r][c+1].set(z[c])
              print(r,c)
           r=(r+1)  
