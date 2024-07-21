@@ -1,3 +1,4 @@
+from datetime import datetime
 import tkinter as tk
 from tkinter import filedialog
 import tkinter.messagebox
@@ -33,8 +34,8 @@ class Model:
         else :
             return ""
                 
-    def increment_value(self):
-        self.value += 1
+    def sort_data(self):
+        print("sort")
 
     def load_value(self):
         self.value -= 1
@@ -59,7 +60,7 @@ class View:
         self.addr_btn = tk.Button(frame, text=" Add Row ", command=self.controller.add_row)
         self.addr_btn.grid(row=0,column=3,padx=5, pady=5)
         
-        self.sort_btn = tk.Button(frame, text=" Date Sort ", command=self.controller.save)
+        self.sort_btn = tk.Button(frame, text=" Date Sort ", command=self.controller.sort_table)
         self.sort_btn.grid(row=0,column=4,padx=5, pady=5)
         
         # Step 4: Create a Canvas and Scrollbar
@@ -131,6 +132,25 @@ class View:
             table_values=table_values+row_values+'~'
         return table_values
 
+    def sort_data(self):
+        table_array=[]
+        for i in range(controller.model.rows-1):
+            row_array=[]
+            for j in range(1,controller.model.columns):
+                #row_values=row_values+self.table[i][j].get()+'|'
+                row_array.append(self.table[i][j].get())
+            table_array.append(row_array)
+        print(table_array)    
+        #table_array.sort(key=lambda t: datetime.strptime(t[3],'%d/%m/%y'))
+        sorted_d=sorted(table_array,key=lambda t: datetime.strptime(t[3] ,'%d/%m/%y'))
+
+        for x in sorted_d :
+            print(x)
+        #return table_values
+        #print(table_array)
+
+        
+
     def add_one_row(self):
         print("cc")
         col_len=[5,12,12,10,10,7,20,10,10]
@@ -189,7 +209,11 @@ class Controller:
         print(self.view.get_table_values())
 
     def add_row(self):
-        self.view.add_one_row() 
+        self.view.add_one_row()
+    
+    def sort_table(self):
+        self.view.sort_data()
+         
 
         
 if __name__ == "__main__":
