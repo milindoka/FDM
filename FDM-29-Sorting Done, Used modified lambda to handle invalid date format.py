@@ -132,9 +132,19 @@ class View:
             table_values=table_values+row_values+'~'
         return table_values
 
+    def validate_date(self,date_str):
+        try:
+            datetime.strptime(date_str, '%d/%m/%y')
+            return True
+        except ValueError:
+            return False
+
+
+
+
     def sort_data(self):
         table_array=[]
-        for i in range(controller.model.rows-1):
+        for i in range(controller.model.rows):
             row_array=[]
             for j in range(1,controller.model.columns):
                 #row_values=row_values+self.table[i][j].get()+'|'
@@ -142,7 +152,7 @@ class View:
             table_array.append(row_array)
         print(table_array)    
         #table_array.sort(key=lambda t: datetime.strptime(t[3],'%d/%m/%y'))
-        sorted_d=sorted(table_array,key=lambda t: datetime.strptime(t[3] ,'%d/%m/%y'))
+        sorted_d=sorted(table_array,key=lambda t: datetime.strptime(t[3] ,'%d/%m/%y') if self.validate_date(t[3]) else datetime.min)
 
         for x in sorted_d :
             print(x)
