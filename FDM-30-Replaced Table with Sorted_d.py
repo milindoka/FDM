@@ -139,9 +139,6 @@ class View:
         except ValueError:
             return False
 
-
-
-
     def sort_data(self):
         table_array=[]
         for i in range(controller.model.rows):
@@ -156,8 +153,13 @@ class View:
 
         for x in sorted_d :
             print(x)
-        #return table_values
-        #print(table_array)
+        #
+        #put sorted entries back to table
+        for i in range(controller.model.rows):
+            for j in range(0,controller.model.columns-1):
+                #row_values=row_values+self.table[i][j].get()+'|'
+                self.table[i][j+1].set(sorted_d[i][j])
+            
 
         
 
