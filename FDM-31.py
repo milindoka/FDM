@@ -159,10 +159,8 @@ class View:
             for j in range(0,controller.model.columns-1):
                 #row_values=row_values+self.table[i][j].get()+'|'
                 self.table[i][j+1].set(sorted_d[i][j])
-            
-
         
-
+        
     def add_one_row(self):
         print("cc")
         col_len=[5,12,12,10,10,7,20,10,10]
@@ -190,6 +188,13 @@ class View:
               self.table[ro-2][c].set(temp)
               print(temp)  
     
+    def delete_row(self,ro,co):       #same as copy upper row, code for del row pending
+        #temp=self.table[ro][co].get()
+        if ro>2 :
+            for c in range(1,controller.model.columns):
+              temp=self.table[ro-3][c].get()
+              self.table[ro-2][c].set(temp)
+              print(temp)  
 
 
 class Controller:
@@ -222,6 +227,9 @@ class Controller:
 
     def add_row(self):
         self.view.add_one_row()
+        
+    def del_row(self):
+        self.view.del_one_row()    
     
     def sort_table(self):
         self.view.sort_data()
@@ -243,25 +251,28 @@ if __name__ == "__main__":
     
     controller = Controller(root)
     
-    
-    def quit(event):
-        print("you pressed control-forwardslash")
+    def delete_current_row(event): 
         widget = root.focus_get()
-        row=widget.grid_info()['row']
-        col=widget.grid_info()['column']
-        print(row,col)
+        if isinstance(widget,tk.Entry) :
+            row=widget.grid_info()['row']
+            col=widget.grid_info()['column']
+            controller.view.delete_row(row,col)            
+        else :
+            print("noentry")     
+    
         
     def copy_upper_row(event): 
         widget = root.focus_get()
         if isinstance(widget,tk.Entry) :
             row=widget.grid_info()['row']
             col=widget.grid_info()['column']
-            controller.view.copy_ur(row,col)
-            
+            controller.view.copy_ur(row,col)            
         else :
             print("noentry")    
             
          
     root.bind('<Control-slash>', quit)
     root.bind('<Control-r>',copy_upper_row)
+    root.bind('<Control-d>',delete_current_row)
+
     root.mainloop()
