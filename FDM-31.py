@@ -214,12 +214,12 @@ class Controller:
         for y in x:
           if not '|' in y : continue
           z=y.split('|')
+          if r>(self.model.rows-1) : 
+             self.view.add_one_row()
           for c in range(0,8):  
              self.view.table[r][c+1].set(z[c])
             #print(r,c)
           r=(r+1) 
-          if r>(self.model.rows-1) : 
-              self.view.add_one_row()
         return  
           
     def print_table_values(self):
