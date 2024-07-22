@@ -191,6 +191,18 @@ class View:
               self.table[ro-2][c].set(temp)
               print(temp)  
     
+    def GetFinancialYear(self,detstr):
+        FY="-"
+        keymonths=['01','02','03']
+        if  detstr[3:5] in keymonths: 
+                yearint=int(detstr[6:8])
+                FY="FY-"+str(yearint-1)+'-'+str(yearint)
+        else : 
+                yearint=int(detstr[6:8])
+                FY="FY-"+str(yearint)+'-'+str(yearint+1)
+        return FY        
+    
+    
     def delete_row(self,ro,co):       #same as copy upper row, code for del row pending
         #temp=self.table[ro][co].get()
         if ro>2 :
@@ -206,19 +218,9 @@ class View:
         for i in range(controller.model.rows):
             strdate=self.table[i][4].get()
             NEM_list.append(self.table[i][8].get())
-            #d=datetime.strptime(strdate,'%d/%m/%y')
-            #print(d) 
-            keymonths=['01','02','03']
-            if strdate[3:5] in keymonths: 
-                yearint=int(strdate[6:8])
-                FY="FY-"+str(yearint-1)+'-'+str(yearint)
-                FY_list.append(FY)
-                #print(strdate,FY)             
-            else : 
-                yearint=int(strdate[6:8])
-                FY="FY-"+str(yearint)+'-'+str(yearint+1)
-                FY_list.append(FY)
-                #print(strdate,FY)
+            FY=self.GetFinancialYear(strdate)
+            FY_list.append(FY)
+            print(strdate,FY)
         FY_set=set(FY_list)        # remove dulicate 
         FY_list=sorted(FY_set)
         NEM_set=set(NEM_list)
