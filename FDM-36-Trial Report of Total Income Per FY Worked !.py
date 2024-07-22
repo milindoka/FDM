@@ -210,6 +210,12 @@ class View:
               temp=self.table[ro-3][c].get()
               self.table[ro-2][c].set(temp)
               print(temp)  
+    
+    def GetIncome(self,rownum):
+          principle=self.table[rownum][1].get() 
+          maturity =self.table[rownum][2].get()
+          income=int(maturity) - int(principle)
+          return income
               
     def fy_report(self):
         print("report")
@@ -227,12 +233,26 @@ class View:
         NEM_list=sorted(NEM_set)   # sort depositor Names and convert to list
         print(FY_list)
         print(NEM_list)
-        for k in NEM_list:
-            for i in range(controller.model.rows):
-               curdate=self.table[i][4].get()
-               curname=self.table[i][8].get()
-               if curname == k : print(curname) 
-            
+        for n in NEM_list:
+            print("===="+n+"====")
+            for f in FY_list :
+                print(f)
+                for i in range(controller.model.rows):
+                    curname=self.table[i][8].get()
+                    if curname != n : continue
+                    curdate=self.table[i][4].get()
+                    fy=self.GetFinancialYear(curdate)
+                    if fy != f : continue
+                    income=self.GetIncome(i)
+                    print(str(i)+"] "+str(income))
+       
+                    
+        
+        
+        
+        #for i in range(controller.model.rows):
+        #    income=self.GetIncome(i)       
+        #    print(str(i)+"] "+str(income))
                 
             
                
