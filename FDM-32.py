@@ -203,8 +203,12 @@ class View:
         print("report")
         for i in range(controller.model.rows):
             strdate=self.table[i][4].get()
-            d=datetime.strptime(strdate,'%d/%m/%y')    
-            print(d) 
+            
+            #d=datetime.strptime(strdate,'%d/%m/%y')
+            #print(d) 
+            keymonths=['01','02','03']
+            if strdate[3:5] in keymonths: print(strdate,"prev")
+            else : print(strdate,"next")
             
                
 class Controller:
