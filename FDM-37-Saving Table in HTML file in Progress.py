@@ -17,8 +17,28 @@ class Model:
         file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text Files", "*.txt")])
         if file_path:
             with open(file_path, "w") as file:
-                file.write(self.save_str)  # Write sample content to file
+                file.write(self.save_str)  # Write sample content to fil    
     
+    
+    # Function to convert the 2D list to an HTML table
+    def list_to_html_table(data):
+        html = "<table border='1'>\n"
+        for row in data:
+            html += "  <tr>\n"
+            for cell in row:
+                html += f"    <td>{cell}</td>\n"
+            html += "  </tr>\n"
+        html += "</table>"
+        return html
+
+    # Convert the list to an HTML table
+    def save_html_table(html_string):
+        #html_table = list_to_html_table(d)
+        # Save the HTML table to a file
+        
+        with open("fd_table.html", "w") as file:
+            file.write(html_string)
+
     def open_popup(self):
             self.messagebox.showinfo("Welcome to GFG.",  "Hi I'm your message") 
         
@@ -66,6 +86,8 @@ class View:
         self.repo_btn = tk.Button(frame, text=" FY Report ", command=self.controller.fy_report)
         self.repo_btn.grid(row=0,column=5,padx=5, pady=5)
 
+        self.html_btn = tk.Button(frame, text="Save Table ", command=self.controller.save_table)
+        self.html_btn.grid(row=0,column=5,padx=5, pady=5)
         
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
@@ -126,6 +148,17 @@ class View:
 
     #def update_value(self, value):
     #    self.label.config(text=str(value))
+
+    def get_table_array(self):
+        table_array=[]
+        for i in range(controller.model.rows):
+            row_array=[]
+            for j in range(1,controller.model.columns):
+                #row_values=row_values+self.table[i][j].get()+'|'
+                row_array.append(self.table[i][j].get())
+            table_array.append(row_array)
+        return(table_array)  
+
 
     def get_table_values(self):
         table_values =""
@@ -282,6 +315,12 @@ class Controller:
             #print(r,c)
           r=(r+1) 
         return  
+
+
+    def save_table(self):
+        #self.model.save_html_table()
+        table_array=self.view.get_table_array()
+        print(table_array)
           
     def print_table_values(self):
         print(self.view.get_table_values())
@@ -321,7 +360,6 @@ if __name__ == "__main__":
             controller.view.delete_row(row,col)            
         else :
             print("noentry")     
-    
         
     def copy_upper_row(event): 
         widget = root.focus_get()
