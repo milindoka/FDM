@@ -21,23 +21,34 @@ class Model:
     
     
     # Function to convert the 2D list to an HTML table
-    def list_to_html_table(data):
-        html = "<table border='1'>\n"
+    def list_to_html_table(self,data):
+        html="<!DOCTYPE html>\n"
+        html+="<html>\n"
+        html+="<style>\n"
+        html+="table, th, td \n"
+        html+="{\n"
+        html+="border:1px solid black;\n"
+        html+="}\n"
+        html+="</style>\n"
+        html+="<body>\n"
+        html+="<table style=\"width:100%\">\n"
         for row in data:
             html += "  <tr>\n"
             for cell in row:
                 html += f"    <td>{cell}</td>\n"
             html += "  </tr>\n"
         html += "</table>"
+        html +="</body>\n"
         return html
 
     # Convert the list to an HTML table
-    def save_html_table(html_string):
-        #html_table = list_to_html_table(d)
+    def save_html_table(self,tablearr):
+        html_string = self.list_to_html_table(tablearr)
         # Save the HTML table to a file
-        
+        #print(html_string)
         with open("fd_table.html", "w") as file:
             file.write(html_string)
+        print("table saved as fd_table.html")    
 
     def open_popup(self):
             self.messagebox.showinfo("Welcome to GFG.",  "Hi I'm your message") 
@@ -320,7 +331,8 @@ class Controller:
     def save_table(self):
         #self.model.save_html_table()
         table_array=self.view.get_table_array()
-        print(table_array)
+        self.model.save_html_table(table_array)
+       # print(table_array)
           
     def print_table_values(self):
         print(self.view.get_table_values())
