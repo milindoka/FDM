@@ -64,7 +64,7 @@ class View:
         self.sort_btn.grid(row=0,column=4,padx=5, pady=5)
         
         self.repo_btn = tk.Button(frame, text=" FY Report ", command=self.controller.fy_report)
-        self.repo_btn.grid(row=0,column=4,padx=5, pady=5)
+        self.repo_btn.grid(row=0,column=5,padx=5, pady=5)
 
         
         # Step 4: Create a Canvas and Scrollbar
@@ -237,6 +237,7 @@ class View:
             print("===="+n+"====")
             for f in FY_list :
                 print(f)
+                totalincome=0
                 for i in range(controller.model.rows):
                     curname=self.table[i][8].get()
                     if curname != n : continue
@@ -244,9 +245,10 @@ class View:
                     fy=self.GetFinancialYear(curdate)
                     if fy != f : continue
                     income=self.GetIncome(i)
-                    print(str(i)+"] "+str(income))
+                    totalincome=totalincome+income
+                    print(str(i)+"] "+curdate+ "   " +str(income))
        
-                    
+                print("Total Income : " + str(totalincome))        
         
         
         
