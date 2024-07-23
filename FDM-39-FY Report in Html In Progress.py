@@ -98,7 +98,11 @@ class View:
         self.repo_btn.grid(row=0,column=5,padx=5, pady=5)
 
         self.html_btn = tk.Button(frame, text="Save Table ", command=self.controller.save_table)
-        self.html_btn.grid(row=0,column=5,padx=5, pady=5)
+        self.html_btn.grid(row=0,column=6,padx=5, pady=5)
+        
+        self.crpo_btn = tk.Button(frame, text=" Create Report ", command=self.controller.cr_report)
+        self.crpo_btn.grid(row=0,column=7,padx=5, pady=5)
+
         
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
@@ -290,6 +294,8 @@ class View:
                     if fy != f : continue
                     income=self.GetIncome(i)
                     totalincome=totalincome+income
+                    
+                    
                     print(str(i)+"] "+curdate+ "   " +str(income))
        
                 print("Total Income : " + str(totalincome))        
@@ -333,6 +339,12 @@ class Controller:
         table_array=self.view.get_table_array()
         self.model.save_html_table(table_array)
        # print(table_array)
+       
+    def cr_report(self):
+        table_array=self.view.get_table_array()
+        #self.model.save_html_table(table_array)
+        print(table_array)
+       
           
     def print_table_values(self):
         print(self.view.get_table_values())
