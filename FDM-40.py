@@ -280,7 +280,7 @@ class View:
         html+="</style>\n"
         html+="<body>\n"
         html+="<table>\n"
-        
+        return html
               
     def fy_report(self):
         print("report")
@@ -292,17 +292,17 @@ class View:
             NEM_list.append(self.table[i][8].get()) # column 8 : Depositor Name
             FY=self.GetFinancialYear(strdate)
             FY_list.append(FY)
-            print(strdate,FY)
+            #print(strdate,FY)
         FY_set=set(FY_list)        # remove dulicates
         FY_list=sorted(FY_set)     # sort uniqe-FY list in ascending order
         NEM_set=set(NEM_list)      # remove duplicate depositor names
         NEM_list=sorted(NEM_set)   # sort depositor Names and convert to list
-        print(FY_list)
-        print(NEM_list)
+        #print(FY_list)
+        #print(NEM_list)
         for n in NEM_list:
             print("===="+n+"====")
             for f in FY_list :
-                print(f)
+                incomelist=[]
                 totalincome=0
                 for i in range(controller.model.rows):
                     curname=self.table[i][8].get()
@@ -312,11 +312,10 @@ class View:
                     if fy != f : continue
                     income=self.GetIncome(i)
                     totalincome=totalincome+income
+                    incomelist.append(str(i)+"] "+curdate+"  "+str(income))
                     
-                    
-                    print(str(i)+"] "+curdate+ "   " +str(income))
-       
-                print("Total Income : " + str(totalincome))        
+                print(f, str(totalincome)  )
+                print(incomelist)     
         
         
         
