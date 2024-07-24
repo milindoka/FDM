@@ -238,7 +238,8 @@ class View:
               temp=self.table[ro-3][c].get()
               self.table[ro-2][c].set(temp)
               print(temp)  
-    
+              
+        
     def GetFinancialYear(self,detstr):
         FY="-"
         keymonths=['01','02','03']
@@ -264,9 +265,26 @@ class View:
           maturity =self.table[rownum][2].get()
           income=int(maturity) - int(principle)
           return income
+
+    def get_header(self):
+        html="<!DOCTYPE html>\n"
+        html+="<html>\n"
+        html+="<style>\n"
+        html+="table\n"
+        html+="{table-layout:fixed;\n"
+        html+="width:100%;\n"
+        html+="border:none;\n"
+        html+="td\n"
+        html+="{border:2px black double}\n"
+        html+="}\n"
+        html+="</style>\n"
+        html+="<body>\n"
+        html+="<table>\n"
+        
               
     def fy_report(self):
         print("report")
+        html_doc=self.get_header()
         FY_list=[]
         NEM_list=[]
         for i in range(controller.model.rows):
