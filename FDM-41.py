@@ -329,11 +329,10 @@ class View:
                     html_doc+=z
                     html_doc+="</td>\n"
                     if column%5 == 0 : 
-                        html_doc+="</tr><tr>\n"
-                        column=column+1    
-                        if z==incomelist(-1): 
-                            html_doc+="<tr>\n"
-        
+                        html_doc+="</tr><tr>\n"         
+                        if len(incomelist)==(column-1) :  html_doc+="<\tr>\n"
+                    column=column+1
+                html_doc+="<tr><td style=\"border:none;\">&nbsp</td></tr>\n"
         with open("fd_reort.html", "w") as file:
             file.write(html_doc)
         print("table saved as fd_table.html")                   
