@@ -285,6 +285,7 @@ class View:
     def fy_report(self):
         print("report")
         html_doc=self.get_header()
+        
         FY_list=[]
         NEM_list=[]
         for i in range(controller.model.rows):
@@ -314,8 +315,29 @@ class View:
                     totalincome=totalincome+income
                     incomelist.append(str(i)+"] "+curdate+"  "+str(income))
                     
-                print(f, str(totalincome)  )
-                print(incomelist)     
+                #print(f, str(totalincome)  )
+                #print(incomelist) 
+                html_doc+="<tr><td>\n"
+                html_doc+=n
+                html_doc+=" :"+f+" : "+str(totalincome)
+                html_doc+="</td>\n"
+                html_doc+="</tr>\n" 
+                html_doc+="<tr>\n"   
+                column=1
+                for z in incomelist:
+                    html_doc+="<td>\n"
+                    html_doc+=z
+                    html_doc+="</td>\n"
+                    if column%5 == 0 : 
+                        html_doc+="</tr><tr>\n"
+                        column=column+1    
+                        if z==incomelist(-1): 
+                            html_doc+="<tr>\n"
+        
+        with open("fd_reort.html", "w") as file:
+            file.write(html_doc)
+        print("table saved as fd_table.html")                   
+        print("html report saved")                
         
         
         
