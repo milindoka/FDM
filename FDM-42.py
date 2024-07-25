@@ -79,28 +79,28 @@ class View:
         frame = tk.Frame(root) 
         frame.grid(row=0, column=0,sticky="nwe") 
         
-        self.save_btn = tk.Button(frame, text="  Save ", command=self.controller.save)
+        self.save_btn = tk.Button(frame, text=" Save ", command=self.controller.save)
         self.save_btn.grid(row=0,column=0,padx=5, pady=5, sticky="w")
         
-        self.load_btn = tk.Button(frame, text="  Load  ", command=self.controller.load)
-        self.load_btn.grid(row=0,column=1,padx=5, pady=5) 
+        self.load_btn = tk.Button(frame, text="Load", command=self.controller.load)
+        self.load_btn.grid(row=0,column=1,padx=5, pady=5,sticky="w") 
         
         #self.printbtn = tk.Button(frame, text="  Print  ", command=self.controller.print_table_values)
         #self.printbtn.grid(row=0,column=2,padx=5, pady=5)
         
-        self.addr_btn = tk.Button(frame, text=" Add Row ", command=self.controller.add_row)
+        self.addr_btn = tk.Button(frame, text="Add Row", command=self.controller.add_row)
         self.addr_btn.grid(row=0,column=3,padx=5, pady=5)
         
-        self.sort_btn = tk.Button(frame, text=" Date Sort ", command=self.controller.sort_table)
+        self.sort_btn = tk.Button(frame, text="Date Sort", command=self.controller.sort_table)
         self.sort_btn.grid(row=0,column=4,padx=5, pady=5)
         
-        self.repo_btn = tk.Button(frame, text=" FY Report ", command=self.controller.fy_report)
+        self.repo_btn = tk.Button(frame, text="FY Report", command=self.controller.fy_report)
         self.repo_btn.grid(row=0,column=5,padx=5, pady=5)
 
         self.html_btn = tk.Button(frame, text="Save Table ", command=self.controller.save_table)
         self.html_btn.grid(row=0,column=6,padx=5, pady=5)
         
-        self.crpo_btn = tk.Button(frame, text=" Create Report ", command=self.controller.cr_report)
+        self.crpo_btn = tk.Button(frame, text="Create Report", command=self.controller.cr_report)
         self.crpo_btn.grid(row=0,column=7,padx=5, pady=5)
 
         
@@ -137,7 +137,7 @@ class View:
                 cell_var = tk.StringVar()
                 if j==0:
                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
-                 cell_entry.insert(0,str(i))
+                 cell_entry.insert(0,str(i+1))
                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
@@ -312,8 +312,9 @@ class View:
                     fy=self.GetFinancialYear(curdate)
                     if fy != f : continue
                     income=self.GetIncome(i)
+                    srnumb=self.table[i][0].get()
                     totalincome=totalincome+income
-                    incomelist.append(str(i)+"] "+curdate+"  "+str(income))
+                    incomelist.append(srnumb+"] "+curdate+"  "+str(income))
                     
                 #print(f, str(totalincome)  )
                 #print(incomelist) 
