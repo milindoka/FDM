@@ -85,8 +85,8 @@ class View:
         self.load_btn = tk.Button(frame, text="  Load  ", command=self.controller.load)
         self.load_btn.grid(row=0,column=1,padx=5, pady=5) 
         
-        self.printbtn = tk.Button(frame, text="  Print  ", command=self.controller.print_table_values)
-        self.printbtn.grid(row=0,column=2,padx=5, pady=5)
+        #self.printbtn = tk.Button(frame, text="  Print  ", command=self.controller.print_table_values)
+        #self.printbtn.grid(row=0,column=2,padx=5, pady=5)
         
         self.addr_btn = tk.Button(frame, text=" Add Row ", command=self.controller.add_row)
         self.addr_btn.grid(row=0,column=3,padx=5, pady=5)
@@ -382,11 +382,7 @@ class Controller:
         table_array=self.view.get_table_array()
         #self.model.save_html_table(table_array)
         print(table_array)
-       
-          
-    def print_table_values(self):
-        print(self.view.get_table_values())
-
+                
     def add_row(self):
         self.view.add_one_row()
         
