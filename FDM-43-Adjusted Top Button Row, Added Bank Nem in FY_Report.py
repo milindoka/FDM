@@ -77,37 +77,37 @@ class View:
         self.controller = controller
         # Step 3: Create a Frame for Grid Layout
         frame = tk.Frame(root) 
-        frame.grid(row=0, column=0,sticky="nwe") 
+        frame.grid(row=0, column=0) 
         
         self.save_btn = tk.Button(frame, text=" Save ", command=self.controller.save)
-        self.save_btn.grid(row=0,column=0,padx=5, pady=5, sticky="w")
+        self.save_btn.grid(row=0,column=0,padx=5, pady=5)
         
         self.load_btn = tk.Button(frame, text="Load", command=self.controller.load)
-        self.load_btn.grid(row=0,column=1,padx=5, pady=5,sticky="w") 
+        self.load_btn.grid(row=0,column=1,padx=5, pady=5) 
         
         #self.printbtn = tk.Button(frame, text="  Print  ", command=self.controller.print_table_values)
         #self.printbtn.grid(row=0,column=2,padx=5, pady=5)
         
         self.addr_btn = tk.Button(frame, text="Add Row", command=self.controller.add_row)
-        self.addr_btn.grid(row=0,column=3,padx=5, pady=5)
+        self.addr_btn.grid(row=0,column=2,padx=5, pady=5)
         
         self.sort_btn = tk.Button(frame, text="Date Sort", command=self.controller.sort_table)
-        self.sort_btn.grid(row=0,column=4,padx=5, pady=5)
+        self.sort_btn.grid(row=0,column=3,padx=5, pady=5)
         
         self.repo_btn = tk.Button(frame, text="FY Report", command=self.controller.fy_report)
-        self.repo_btn.grid(row=0,column=5,padx=5, pady=5)
+        self.repo_btn.grid(row=0,column=4,padx=5, pady=5)
 
         self.html_btn = tk.Button(frame, text="Save Table ", command=self.controller.save_table)
-        self.html_btn.grid(row=0,column=6,padx=5, pady=5)
+        self.html_btn.grid(row=0,column=5,padx=5, pady=5)
         
         self.crpo_btn = tk.Button(frame, text="Create Report", command=self.controller.cr_report)
-        self.crpo_btn.grid(row=0,column=7,padx=5, pady=5)
+        self.crpo_btn.grid(row=0,column=6,padx=5, pady=5)
 
         
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
         scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=scrollbar.set, height=550)    
+        canvas.configure(yscrollcommand=scrollbar.set, height=550,width=1200)    
     
         # Step 5: Create a Frame for Scrollable Content
         self.content_frame = tk.Frame(canvas)
@@ -119,7 +119,7 @@ class View:
         title_str = tk.Entry(self.content_frame,justify="center",bg="gray",width=5)
         title_str.insert(0, "Sr") 
         title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
-        title_str.grid(row=1,column=0)
+        title_str.grid(row=2,column=0)
         col_len=[5,12,12,10,10,7,20,10,10]
         title_row=['Principal','Maturity','From','To','Interest','ID','Bank','Title']
         i=1
@@ -156,8 +156,8 @@ class View:
 
         # Step 9: Pack Widgets onto the Window
         canvas.create_window((0, 0), window=self.content_frame, anchor="nw")
-        canvas.grid(row=2, column=0, sticky="nsew")
-        scrollbar.grid(row=2, column=1, sticky="ns")
+        canvas.grid(row=2, column=0, columnspan=8,sticky="nsew")
+        scrollbar.grid(row=2, column=10,sticky="ns")
 
         # Step 10: Bind the Canvas to Mousewheel Events
 
@@ -284,6 +284,7 @@ class View:
               
     def fy_report(self):
         print("report")
+        self.sort_data()
         html_doc=self.get_header()
         
         FY_list=[]
@@ -313,8 +314,9 @@ class View:
                     if fy != f : continue
                     income=self.GetIncome(i)
                     srnumb=self.table[i][0].get()
+                    banknem=self.table[i][7].get()
                     totalincome=totalincome+income
-                    incomelist.append(srnumb+"] "+curdate+"  "+str(income))
+                    incomelist.append(srnumb+"] "+curdate+":"+banknem+":"+str(income))
                     
                 #print(f, str(totalincome)  )
                 #print(incomelist) 
