@@ -224,7 +224,7 @@ class View:
                 cell_var = tk.StringVar()
                 if j==0:
                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
-                 cell_entry.insert(0,str(controller.model.rows))
+                 cell_entry.insert(0,str(controller.model.rows+1))
                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
@@ -334,7 +334,7 @@ class View:
                     html_doc+="<td>\n"
                     html_doc+=z
                     html_doc+="</td>\n"
-                    if column%5 == 0 : 
+                    if column%3 == 0 : 
                         html_doc+="</tr><tr>\n"         
                         if len(incomelist)==(column-1) :  html_doc+="<\tr>\n"
                     column=column+1
