@@ -265,12 +265,16 @@ class View:
  
     def insert_row(self,ro,co):         #first add one row, then shift each row to next row from current row
         #temp=self.table[ro][co].get()  # then clear current row
-        #self.add_one_row()
+        self.add_one_row()
         tablearr=self.get_table_array()
         print(tablearr)
-        tablearr.insert(ro-1,['','','','','','','',''])
+        tablearr.insert(ro-2,['','','','','','','',''])
         print('after insert')
         print(tablearr)
+        for i in range(controller.model.rows):
+            for j in range(0,controller.model.columns-1):
+                #row_values=row_values+self.table[i][j].get()+'|'
+                self.table[i][j+1].set(tablearr[i][j])
         
     
     def GetIncome(self,rownum):
