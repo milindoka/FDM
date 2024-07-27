@@ -262,6 +262,16 @@ class View:
               temp=self.table[ro-3][c].get()
               self.table[ro-2][c].set(temp)
               print(temp)  
+ 
+    def insert_row(self,ro,co):         #first add one row, then shift each row to next row from current row
+        #temp=self.table[ro][co].get()  # then clear current row
+        #self.add_one_row()
+        tablearr=self.get_table_array()
+        print(tablearr)
+        tablearr.insert(ro-1,['','','','','','','',''])
+        print('after insert')
+        print(tablearr)
+        
     
     def GetIncome(self,rownum):
           principle=self.table[rownum][1].get() 
@@ -424,6 +434,16 @@ if __name__ == "__main__":
             controller.view.delete_row(row,col)            
         else :
             print("noentry")     
+            
+    def insert_row(event): 
+        widget = root.focus_get()
+        if isinstance(widget,tk.Entry) :
+            row=widget.grid_info()['row']
+            col=widget.grid_info()['column']
+            controller.view.insert_row(row,col)            
+        else :
+            print("noentry")                 
+            
         
     def copy_upper_row(event): 
         widget = root.focus_get()
@@ -438,5 +458,7 @@ if __name__ == "__main__":
     root.bind('<Control-slash>', quit)
     root.bind('<Control-r>',copy_upper_row)
     root.bind('<Control-d>',delete_current_row)
+    root.bind('<Control-i>',insert_row)
+    
 
     root.mainloop()
