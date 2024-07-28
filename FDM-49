@@ -234,23 +234,6 @@ class View:
             controller.model.rows=controller.model.rows+1
 
     
-    def copy_ur(self,ro,co):     #copy uppper row
-        #temp=self.table[ro][co].get()
-        if ro>2 :
-            for c in range(1,controller.model.columns):
-              temp=self.table[ro-3][c].get()
-              self.table[ro-2][c].set(temp)
-              print(temp)  
-    
-    def copy_lr(self,ro,co):       # copy lower row
-        #temp=self.table[ro][co].get()
-        if ro<controller.model.rows+1 :
-            for c in range(1,controller.model.columns):
-              temp=self.table[ro-1][c].get()
-              self.table[ro-2][c].set(temp)
-              print(temp)      
-        else :
-            print('last row')
               
         
     def GetFinancialYear(self,detstr):
@@ -273,17 +256,6 @@ class View:
               self.table[ro-2][c].set(temp)
               print(temp)  
  
-    def insert_row(self,ro,co):                          
-        self.add_one_row()                               #first add one row
-        tablearr=self.get_table_array()                  # get table array 
-        #print(tablearr)
-        tablearr.insert(ro-2,['','','','','','','',''])  # insert empty row in array.
-        #print('after insert')
-        #print(tablearr)
-        for i in range(controller.model.rows):            # then fill back the table with array
-            for j in range(0,controller.model.columns-1):
-                #row_values=row_values+self.table[i][j].get()+'|'
-                self.table[i][j+1].set(tablearr[i][j])
         
     
     def GetIncome(self,rownum):
@@ -368,12 +340,51 @@ class View:
         print("html report saved")                
         
         
+    def copy_ur(self,ro,co):     #copy uppper row
+        #temp=self.table[ro][co].get()
+        if ro>2 :
+            for c in range(1,controller.model.columns):
+              temp=self.table[ro-3][c].get()
+              self.table[ro-2][c].set(temp)
+              print(temp)  
+    
+    def copy_lr(self,ro,co):       # copy lower row
+        #temp=self.table[ro][co].get()
+        if ro<controller.model.rows+1 :
+            for c in range(1,controller.model.columns):
+              temp=self.table[ro-1][c].get()
+              self.table[ro-2][c].set(temp)
+              print(temp)      
+        else :
+            print('last row')
+
+    def insert_row(self,ro,co):                          
+        self.add_one_row()                               #first add one row
+        tablearr=self.get_table_array()                  # get table array 
+        #print(tablearr)
+        tablearr.insert(ro-2,['','','','','','','',''])  # insert empty row in array.
+        #print('after insert')
+        #print(tablearr)
+        for i in range(controller.model.rows):            # then fill back the table with array
+            for j in range(0,controller.model.columns-1):
+                #row_values=row_values+self.table[i][j].get()+'|'
+                self.table[i][j+1].set(tablearr[i][j])
+
+
         
-        #for i in range(controller.model.rows):
-        #    income=self.GetIncome(i)       
-        #    print(str(i)+"] "+str(income))
-                
-            
+    def create_cc(self,ro,co):       # create previous date coupan from date
+        self.insert_row(ro,co)
+        self.copy_lr(ro,co)
+        
+        '''' 
+        if ro<controller.model.rows+1 :
+            for c in range(1,controller.model.columns):
+              temp=self.table[ro-1][c].get()
+              self.table[ro-2][c].set(temp)
+              print(temp)      
+        else :
+            print('last row')
+        '''    
                
 class Controller:
     def __init__(self, root):
@@ -467,7 +478,7 @@ if __name__ == "__main__":
         else :
             print("noentry")    
             
-    def test(event): 
+    def copy_lower_row(event): 
         print('forwa')
         widget = root.focus_get()
         if isinstance(widget,tk.Entry) :
@@ -476,15 +487,24 @@ if __name__ == "__main__":
             controller.view.copy_lr(row,col)            
         else :
             print("noentry")    
-
-        
-    
-    
+            
+    def create_coupan(event) : 
+        print('create coupan')
+        widget = root.focus_get()
+        if isinstance(widget,tk.Entry) :
+            row=widget.grid_info()['row']
+            col=widget.grid_info()['column']
+            controller.view.create_cc(row,col)            
+        else :
+            print("noentry")    
+            
+ 
          
-    root.bind('<Control-6>', test)
+    root.bind('<Control-6>',create_coupan)
     root.bind('<Control-r>',copy_upper_row)
     root.bind('<Control-d>',delete_current_row)
     root.bind('<Control-i>',insert_row)
+    root.bind('<Control-l>',copy_lower_row)
     
 
     root.mainloop()
