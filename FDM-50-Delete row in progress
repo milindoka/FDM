@@ -247,17 +247,7 @@ class View:
                 FY="FY-"+str(yearint)+'-'+str(yearint+1)
         return FY        
     
-    
-    def delete_row(self,ro,co):       #same as copy upper row, code for del row pending
-        #temp=self.table[ro][co].get()
-        if ro>2 :
-            for c in range(1,controller.model.columns):
-              temp=self.table[ro-3][c].get()
-              self.table[ro-2][c].set(temp)
-              print(temp)  
- 
-        
-    
+            
     def GetIncome(self,rownum):
           principle=self.table[rownum][1].get() 
           maturity =self.table[rownum][2].get()
@@ -370,6 +360,22 @@ class View:
                 #row_values=row_values+self.table[i][j].get()+'|'
                 self.table[i][j+1].set(tablearr[i][j])
 
+
+    #def destroy_entry(self, row, col):
+    #    widget = self.content_frame.grid_slaves(row=row, column=col)[0]
+    #    if isinstance(widget, tk.Entry):
+    #        widget.destroy()
+
+    
+    
+    def destroy_row(self, row):
+        #destroy last row in table
+        for col in range(self.controller.model.columns):
+            widget = self.content_frame.grid_slaves(row=self.controller.model.rows+1, column=col)
+            if widget:
+                widget[0].destroy()
+
+
         
     def create_cc(self,ro,co):       # create previous date coupan from date
         self.insert_row(ro,co)
@@ -460,8 +466,10 @@ if __name__ == "__main__":
         widget = root.focus_get()
         if isinstance(widget,tk.Entry) :
             row=widget.grid_info()['row']
-            col=widget.grid_info()['column']
-            controller.view.delete_row(row,col)            
+            controller.view.destroy_row(row)
+            
+            #col=widget.grid_info()['column']
+            #controller.view.delete_row(row,col)            
         else :
             print("noentry")     
             
