@@ -139,11 +139,15 @@ class View:
             for j in range(controller.model.columns):
                 cell_var = tk.StringVar()
                 if j==0:
-                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
-                 cell_entry.insert(0,str(i+1))
-                 cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
+                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
+                  cell_entry.insert(0,str(i+1))
+                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
-                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
+                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
+                  cell_entry.bind('<Left>', self.move_focus)
+                  cell_entry.bind('<Right>', self.move_focus)
+                  cell_entry.bind('<Up>', self.move_focus)
+                  cell_entry.bind('<Down>', self.move_focus)
                 cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
@@ -223,18 +227,34 @@ class View:
             for j in range(controller.model.columns):
                 cell_var = tk.StringVar()
                 if j==0:
-                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
-                 cell_entry.insert(0,str(controller.model.rows+1))
-                 cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
+                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=5)
+                  cell_entry.insert(0,str(controller.model.rows+1))
+                  cell_entry.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
                 else :
-                 cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
+                  cell_entry = tk.Entry(self.content_frame, textvariable=cell_var,width=col_len[j])
+                  cell_entry.bind('<Left>', self.move_focus)
+                  cell_entry.bind('<Right>', self.move_focus)
+                  cell_entry.bind('<Up>', self.move_focus)
+                  cell_entry.bind('<Down>', self.move_focus)
                 cell_entry.grid(row=controller.model.rows+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
             controller.model.rows=controller.model.rows+1
 
+    def move_focus(self, event):
+        widget = event.widget
+        row, col = widget.grid_info()['row'], widget.grid_info()['column']
     
-              
+        if event.keysym == 'Left' and col > 1:
+            self.content_frame.grid_slaves(row=row, column=col-1)[0].focus_set()
+        elif event.keysym == 'Right' and col < self.controller.model.columns - 1:
+            self.content_frame.grid_slaves(row=row, column=col+1)[0].focus_set()
+        elif event.keysym == 'Up' and row > 2:
+            self.content_frame.grid_slaves(row=row-1, column=col)[0].focus_set()
+        elif event.keysym == 'Down' and row < self.controller.model.rows + 1:
+            self.content_frame.grid_slaves(row=row+1, column=col)[0].focus_set()
+
+      
         
     def GetFinancialYear(self,detstr):
         FY="-"
@@ -368,14 +388,27 @@ class View:
 
     
     
-    def destroy_row(self, row):
-        #destroy last row in table
+    def destroy_row(self, ro):
+        tablearr=self.get_table_array()                  # get table array 
+        #print(tablearr)
+        tablearr.pop(ro-2)  # delete specified row in array.
+ 
+         #destroy last row in entry grid
         for col in range(self.controller.model.columns):
             widget = self.content_frame.grid_slaves(row=self.controller.model.rows+1, column=col)
             if widget:
                 widget[0].destroy()
-
-
+        
+        self.controller.model.rows=self.controller.model.rows-1
+                
+    
+        #print('after delete')
+        # then fill back the table with array        
+        for i in range(controller.model.rows):            
+            for j in range(0,controller.model.columns-1):
+                #row_values=row_values+self.table[i][j].get()+'|'
+                self.table[i][j+1].set(tablearr[i][j])
+        
         
     def create_cc(self,ro,co):       # create previous date coupan from date
         self.insert_row(ro,co)
