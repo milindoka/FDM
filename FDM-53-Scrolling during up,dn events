@@ -246,13 +246,20 @@ class View:
         row, col = widget.grid_info()['row'], widget.grid_info()['column']
     
         if event.keysym == 'Left' and col > 1:
-            self.content_frame.grid_slaves(row=row, column=col-1)[0].focus_set()
+            next_widget = self.content_frame.grid_slaves(row=row, column=col-1)[0]
         elif event.keysym == 'Right' and col < self.controller.model.columns - 1:
-            self.content_frame.grid_slaves(row=row, column=col+1)[0].focus_set()
+            next_widget = self.content_frame.grid_slaves(row=row, column=col+1)[0]
         elif event.keysym == 'Up' and row > 2:
-            self.content_frame.grid_slaves(row=row-1, column=col)[0].focus_set()
+            next_widget = self.content_frame.grid_slaves(row=row-1, column=col)[0]
         elif event.keysym == 'Down' and row < self.controller.model.rows + 1:
-            self.content_frame.grid_slaves(row=row+1, column=col)[0].focus_set()
+            next_widget = self.content_frame.grid_slaves(row=row+1, column=col)[0]
+        else:
+            return
+
+        next_widget.focus_set()
+        self.content_frame.update_idletasks()
+        self.content_frame.master.yview_moveto(float(next_widget.winfo_y()) / self.content_frame.winfo_height())
+
 
       
         
