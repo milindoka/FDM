@@ -250,15 +250,25 @@ class View:
         elif event.keysym == 'Right' and col < self.controller.model.columns - 1:
             next_widget = self.content_frame.grid_slaves(row=row, column=col+1)[0]
         elif event.keysym == 'Up' and row > 2:
-            next_widget = self.content_frame.grid_slaves(row=row-1, column=col)[0]
+          next_widget = self.content_frame.grid_slaves(row=row-1, column=col)[0]
         elif event.keysym == 'Down' and row < self.controller.model.rows + 1:
             next_widget = self.content_frame.grid_slaves(row=row+1, column=col)[0]
         else:
             return
 
         next_widget.focus_set()
-        self.content_frame.update_idletasks()
-        self.content_frame.master.yview_moveto(float(next_widget.winfo_y()) / self.content_frame.winfo_height())
+    
+        canvas = self.content_frame.master
+        visible_top = canvas.canvasy(0)
+        visible_bottom = visible_top + canvas.winfo_height()
+    
+        widget_top = next_widget.winfo_y()
+        widget_bottom = widget_top + next_widget.winfo_height()
+    
+        if widget_top < visible_top:
+            canvas.yview_moveto(float(widget_top) / self.content_frame.winfo_height())
+        elif widget_bottom > visible_bottom:
+            canvas.yview_moveto(float(widget_bottom - canvas.winfo_height()) / self.content_frame.winfo_height())
 
 
       
