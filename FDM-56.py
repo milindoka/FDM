@@ -74,6 +74,7 @@ class Model:
 
     def load_value(self):
         self.value -= 1
+                  
 
 class View:
     
@@ -109,6 +110,10 @@ class View:
 
         self.samd_btn = tk.Button(frame, text="Sample Data", command=self.controller.sample_data)
         self.samd_btn.grid(row=0,column=7,padx=5, pady=5)
+
+        self.vali_btn = tk.Button(frame, text="Validate", command=self.controller.validate_data)
+        self.vali_btn.grid(row=0,column=8,padx=5, pady=5)
+
         
         # Step 4: Create a Canvas and Scrollbar
         canvas = tk.Canvas(frame)
@@ -415,8 +420,16 @@ class View:
 # show_autoclose_window("This window will close in 5 seconds", 5000)
 
     
+    def compound_interest(self,principal, rate, time):
+        # Calculates compound interest
+        maturity = round(principal * (pow((1 + rate / 100), time)))
+        #CI = Amount - principal        
+        print("Principal=",principal)  
+        print("Maturity",maturity)
     
-    
+    def validate_data(self):        
+        self.compound_interest(3500, 7.17735, 10)
+        
     def sample_data(self):       # fill sample data in table
         #temp=self.table[ro][co].get()
         sample=['a','a','a','a','a','a','a','a']  
@@ -541,6 +554,9 @@ class Controller:
         
     def sample_data(self):
         self.view.sample_data()
+        
+    def validate_data(self):
+        self.view.validate_data()
         
         
 if __name__ == "__main__":
