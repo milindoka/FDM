@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import Toplevel,Label
@@ -429,33 +429,20 @@ class View:
         
     
     def validate_data(self):        
-        #self.compound_interest(3500, 7.17735, 10) # kvp 
+        #self.compound_interest(3500, 7.17735, 10)
         self.sample_entry()
     
     def sample_entry(self):
           #random.seed()
           samplerow=[]
-          principal = random.randint(1,50)*1000
-          samplerow.append(str(principal))
+          a = random.randint(1,50)*1000
+          samplerow.append(str(a))
+          interest=round(random.uniform(7,8), 2)
+          samplerow.append(str(interest))   
           
-          interest=round(random.uniform(7,8), 2)          
-          maturity=round(principal*(pow((1+interest/100),10)))
-          
-          samplerow.append(str(maturity))          
-             
-          
-          start_date = datetime.now()
-          end_date = start_date - timedelta(days=1820)
-          random_date = start_date + (end_date - start_date) * random.random()
-          fromm =random_date.strftime("%d/%m/%Y")
-          closing=random_date + timedelta(days=1825)         
-          too=closing.strftime("%d/%m/%Y")
-          samplerow.append(fromm)
-          samplerow.append(too)
-          samplerow.append(str(interest))
-          
+          maturity=round(a*(pow((1+interest/100),10)))
+          samplerow.append(str(maturity))
           print(samplerow)
-          
                     
         
     def sample_data(self):       # fill sample data in table
