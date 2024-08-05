@@ -113,6 +113,10 @@ class View:
 
         self.vali_btn = tk.Button(frame, text="Validate", command=self.controller.validate_data)
         self.vali_btn.grid(row=0,column=8,padx=5, pady=5)
+        
+        self.shortcuts_btn = tk.Button(frame, text="Keyboard Shortcuts", command=self.show_shortcuts)
+        self.shortcuts_btn.grid(row=0, column=9, padx=5, pady=5)
+
 
         title_frame = tk.Frame(frame)
         title_frame.grid(row=1, column=0, columnspan=8, sticky="ew")
@@ -504,7 +508,7 @@ class View:
     def sample_data(self):       # fill sample data in table
         #temp=self.table[ro][co].get()
         
-        for i in range(0,71):
+        for i in range(0,51):
             sample=self.sample_entry()
             if i>controller.model.rows-1:     # if  row number is less than number of rows
                 self.add_one_row()
@@ -553,7 +557,7 @@ class View:
                 #row_values=row_values+self.table[i][j].get()+'|'
                 self.table[i][j+1].set(tablearr[i][j])
         
-        
+    '''      
     def create_cc(self,ro,co):       # create previous date coupan from date
         self.insert_row(ro,co)
         self.copy_lr(ro,co)        
@@ -574,6 +578,29 @@ class View:
             dd=daysofmonth[mm]      
         self.table[ro-2][4].set(str(dd).rjust(2, '0')+str('/')+str(mm).rjust(2, '0')+str('/')+str(yy).rjust(2, '0'))
         self.table
+    '''
+        
+    def show_shortcuts(self):
+        shortcuts_window = tk.Toplevel(root)
+        shortcuts_window.title("Keyboard Shortcuts")
+        shortcuts_window.geometry("400x300")
+
+        shortcuts = [
+            ("Left Arrow", "Move to left cell"),
+            ("Right Arrow", "Move to right cell"),
+            ("Up Arrow", "Move to cell above"),
+            ("Down Arrow", "Move to cell below"),
+            ("Ctrl + R", "Copy upper row"),
+            ("Ctrl + L", "Copy lower row"),
+            ("Ctrl + D", "Delete current row"),
+            ("Ctrl + I", "Insert new row"),
+            ("Ctrl + 6", "Create coupon")
+            ]
+
+        for i, (key, description) in enumerate(shortcuts):
+            tk.Label(shortcuts_window, text=key, font=("Arial", 12, "bold")).grid(row=i, column=0, padx=10, pady=5, sticky="w")
+            tk.Label(shortcuts_window, text=description, font=("Arial", 12)).grid(row=i, column=1, padx=10, pady=5, sticky="w")
+        
         
 class Controller:
     def __init__(self, root):
@@ -685,7 +712,8 @@ if __name__ == "__main__":
             controller.view.copy_lr(row,col)            
         else :
             print("noentry")    
-            
+  
+    '''          
     def create_coupan(event) : 
         print('create coupan')
         widget = root.focus_get()
@@ -695,10 +723,10 @@ if __name__ == "__main__":
             controller.view.create_cc(row,col)            
         else :
             print("noentry")    
-            
+    '''          
  
          
-    root.bind('<Control-6>',create_coupan)
+    #root.bind('<Control-6>',create_coupan)
     root.bind('<Control-r>',copy_upper_row)
     root.bind('<Control-d>',delete_current_row)
     root.bind('<Control-i>',insert_row)
