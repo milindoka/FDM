@@ -504,7 +504,7 @@ class View:
     def sample_data(self):       # fill sample data in table
         #temp=self.table[ro][co].get()
         
-        for i in range(0,71):
+        for i in range(0,51):
             sample=self.sample_entry()
             if i>controller.model.rows-1:     # if  row number is less than number of rows
                 self.add_one_row()
