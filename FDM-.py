@@ -132,7 +132,7 @@ class View:
 
         canvas = tk.Canvas(frame)
         scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=scrollbar.set, height=550,width=1120)    
+        canvas.configure(yscrollcommand=scrollbar.set, height=450,width=1120)    
         # Step 5: Create a Frame for Scrollable Content
         self.content_frame = tk.Frame(canvas)
 
@@ -154,22 +154,6 @@ class View:
         # Step 6: Configure the Canvas and Scrollable Content Frame
         self.content_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
         # Create Table 
-        '''
-        #  --Table Title Row -----
-        title_str = tk.Entry(self.content_frame,justify="center",bg="gray",width=5)
-        title_str.insert(0, "Sr") 
-        title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
-        title_str.grid(row=1,column=0)
-        col_len=[5,12,12,10,10,7,20,10,10]
-        title_row=['Principal','Maturity','From','To','Interest','ID','Bank','Title']
-        i=1
-        for x in title_row:
-            title_str = tk.Entry(self.content_frame,justify="center",bg="gray",width=col_len[i])
-            title_str.insert(0,x) 
-            title_str.config(state=tk.DISABLED,disabledbackground="#D3D3D3", disabledforeground="black")
-            title_str.grid(row=1,column=i)
-            i=i+1
-        '''    
         # -----Add rows and columns to table-----
         self.table = []
         for i in range(controller.model.rows):
@@ -509,7 +493,7 @@ class View:
     def sample_data(self):       # fill sample data in table
         #temp=self.table[ro][co].get()
         
-        for i in range(0,51):
+        for i in range(0,70):
             sample=self.sample_entry()
             if i>controller.model.rows-1:     # if  row number is less than number of rows
                 self.add_one_row()
