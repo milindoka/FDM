@@ -109,14 +109,16 @@ class View:
         self.crpo_btn.grid(row=0,column=6,padx=5, pady=5,sticky='nsew')
         
         self.samd_btn = tk.Button(frame, text="Sample Data", command=self.controller.sample_data)
-        self.samd_btn.grid(row=1,column=0,padx=5, pady=5,sticky='nsew') 
+        self.samd_btn.grid(row=0,column=7,padx=5, pady=5,sticky='nsew') 
 
         self.vali_btn = tk.Button(frame, text="Validate", command=self.controller.validate_data)
-        self.vali_btn.grid(row=1,column=1,padx=5, pady=5,sticky='nsew')
+        self.vali_btn.grid(row=0,column=8,padx=5, pady=5,sticky='nsew')
         
         self.shortcuts_btn = tk.Button(frame, text="Keyboard Shortcuts", command=self.show_shortcuts)
-        self.shortcuts_btn.grid(row=1, column=2, padx=5, pady=5,sticky='nsew')
+        self.shortcuts_btn.grid(row=0, column=9, padx=5, pady=5,sticky='nsew')
         
+        self.sr_btn = tk.Button(frame, text="2nd row", command=self.show_shortcuts)
+        self.sr_btn.grid(row=1, column=0, padx=5, pady=5,sticky='nsew')
         
         
         title_frame = tk.Frame(frame)
@@ -132,7 +134,7 @@ class View:
 
         canvas = tk.Canvas(frame)
         scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=scrollbar.set, height=550,width=1120)    
+        canvas.configure(yscrollcommand=scrollbar.set, height=550,width=1150)    
         # Step 5: Create a Frame for Scrollable Content
         self.content_frame = tk.Frame(canvas)
 

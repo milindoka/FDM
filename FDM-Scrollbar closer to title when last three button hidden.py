@@ -106,21 +106,20 @@ class View:
         self.html_btn.grid(row=0,column=5,padx=5, pady=5)
         
         self.crpo_btn = tk.Button(frame, text="Create Report", command=self.controller.cr_report)
-        self.crpo_btn.grid(row=0,column=6,padx=5, pady=5,sticky='nsew')
-        
+        self.crpo_btn.grid(row=0,column=6,padx=5, pady=5)
+        '''
         self.samd_btn = tk.Button(frame, text="Sample Data", command=self.controller.sample_data)
-        self.samd_btn.grid(row=1,column=0,padx=5, pady=5,sticky='nsew') 
+        self.samd_btn.grid(row=0,column=7,padx=5, pady=5)
 
         self.vali_btn = tk.Button(frame, text="Validate", command=self.controller.validate_data)
-        self.vali_btn.grid(row=1,column=1,padx=5, pady=5,sticky='nsew')
+        self.vali_btn.grid(row=0,column=8,padx=5, pady=5)
         
         self.shortcuts_btn = tk.Button(frame, text="Keyboard Shortcuts", command=self.show_shortcuts)
-        self.shortcuts_btn.grid(row=1, column=2, padx=5, pady=5,sticky='nsew')
-        
-        
-        
+        self.shortcuts_btn.grid(row=0, column=9, padx=5, pady=5)
+        '''
+
         title_frame = tk.Frame(frame)
-        title_frame.grid(row=2, column=0, columnspan=8, sticky="nsew")
+        title_frame.grid(row=1, column=0, columnspan=8, sticky="ew")
         
         col_len=[5,12,12,10,10,7,20,10,10]
         title_row=['Sr','Principal','Maturity','From','To','Interest','ID','Bank','Title']
@@ -128,17 +127,17 @@ class View:
             title_str = tk.Entry(title_frame, justify="center", bg="gray", width=col_len[i])
             title_str.insert(0, title)
             title_str.config(state=tk.DISABLED, disabledbackground="#D3D3D3", disabledforeground="black")
-            title_str.grid(row=0, column=i, sticky="nsew")
+            title_str.grid(row=0, column=i, sticky="ew")
 
         canvas = tk.Canvas(frame)
         scrollbar = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=scrollbar.set, height=550,width=1120)    
+        canvas.configure(yscrollcommand=scrollbar.set, height=550,width=110)    
         # Step 5: Create a Frame for Scrollable Content
         self.content_frame = tk.Frame(canvas)
 
 
-        canvas.grid(row=2, column=0, columnspan=8)
-        scrollbar.grid(row=2, column=10, sticky="ns")
+        canvas.grid(row=3, column=0, columnspan=8, sticky="nsew")
+        scrollbar.grid(row=3, column=10, sticky="ns")
 
         for i in range(controller.model.rows):
             for j in range(controller.model.columns):
@@ -186,7 +185,7 @@ class View:
                   cell_entry.bind('<Right>', self.move_focus)
                   cell_entry.bind('<Up>', self.move_focus)
                   cell_entry.bind('<Down>', self.move_focus)
-                cell_entry.grid(row=i+2, column=j,sticky="ew")
+                cell_entry.grid(row=i+2, column=j)
                 row.append(cell_var)
             self.table.append(row)        
         
@@ -200,9 +199,9 @@ class View:
         frame.rowconfigure(0, weight=0)
 
         # Step 9: Pack Widgets onto the Window
-        canvas.create_window((4, 0), window=self.content_frame, anchor="nw")
-        canvas.grid(row=4, column=0, columnspan=8,sticky="nsew")
-        scrollbar.grid(row=4, column=10,sticky="ns")
+        canvas.create_window((0, 0), window=self.content_frame, anchor="nw")
+        canvas.grid(row=2, column=0, columnspan=8,sticky="nsew")
+        scrollbar.grid(row=2, column=10,sticky="ns")
 
         # Step 10: Bind the Canvas to Mousewheel Events
 
