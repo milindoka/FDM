@@ -203,7 +203,6 @@ class View:
             table_array.append(row_array)
         return(table_array)  
 
-
     def get_table_values(self):
         table_values =""
         for i in range(controller.model.rows):
